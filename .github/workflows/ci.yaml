@@ -23,7 +23,7 @@ jobs:
         path: zcl
     - uses: actions/checkout@v2
       with:
-        repository: hemtjanst/zyaml
+        repository: mnbbrown/zyaml
         path: zyaml
     - uses: actions/setup-go@v2-beta
       with:
@@ -31,7 +31,7 @@ jobs:
     - name: Generate ZCL
       working-directory: ./zcl
       run: |
-        go run hemtjan.st/zcl/cmd/zclgen -definition-path ../zyaml
+        go run ./cmd/zclgen -definition-path ../zyaml
         if test -n "$(git status -s)"; then
           echo "Repository is in dirty state!"
           echo "  Update your copy of zyaml to latest master"
