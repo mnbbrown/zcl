@@ -7,6 +7,7 @@ import (
 	"hemtjan.st/zcl/cluster/lighting"
 	"hemtjan.st/zcl/cluster/measurement"
 	"hemtjan.st/zcl/cluster/otau"
+	"hemtjan.st/zcl/cluster/security"
 )
 
 var Clusters = map[zcl.ClusterID]zcl.Cluster{
@@ -45,4 +46,5 @@ var Clusters = map[zcl.ClusterID]zcl.Cluster{
 	measurement.RelativeHumidityMeasurementID: measurement.RelativeHumidityMeasurementCluster,
 	measurement.TemperatureMeasurementID:      measurement.TemperatureMeasurementCluster,
 	otau.OtauID:                               otau.OtauCluster,
+	security.IasZoneID:                        security.IasZoneCluster,
 }

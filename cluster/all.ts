@@ -7900,6 +7900,89 @@ reporting occupancy status`,
         0x02: ZigBee.Otau.Otau.QueryNextImageResponse,
         0x05: ZigBee.Otau.Otau.ImageBlockResponse,
     };
+    export const IasZone = {
+        Types: { 
+            ZoneState: makeType<ZigBee.IIasZone.IArgZoneState, ZigBee.IIasZone.IArgZoneStatePayload>(base.enum8, ()=>({
+                name: `Zone State`,
+                description: ``,
+                id: 0x0000,
+                report: false,
+                read: true,
+                write: false,
+                require: false,
+                values: { 
+                0x00: `Not Enrolled`, 
+                0x01: `Enrolled`,  },
+                
+            })),
+            ZoneStatus: makeType<ZigBee.IIasZone.IArgZoneStatus, ZigBee.IIasZone.IArgZoneStatusPayload>(base.bmp16, ()=>({
+                name: `Zone Status`,
+                description: ``,
+                id: 0x0002,
+                report: false,
+                read: true,
+                write: false,
+                require: false,
+                bits: { 
+                0: `Alarm1`, 
+                1: `Alarm2`, 
+                2: `Tamper`, 
+                3: `Battery`, 
+                4: `Supervision Reports`, 
+                5: `Restore Reports`, 
+                6: `Trouble`, 
+                7: `AC`, 
+                8: `Test`, 
+                9: `Battery defect`,  },
+                
+            })),
+            ZoneType: makeType<ZigBee.IIasZone.IArgZoneType, ZigBee.IIasZone.IArgZoneTypePayload>(base.enum16, ()=>({
+                name: `Zone Type`,
+                description: ``,
+                id: 0x0001,
+                report: false,
+                read: true,
+                write: false,
+                require: false,
+                values: { 
+                0x0000: `Standard CIE`, 
+                0x000d: `Motion sensor`, 
+                0x0015: `Contact switch`, 
+                0x0028: `Fire sensor`, 
+                0x002a: `Water sensor`, 
+                0x002b: `Carbon monoxide sensor`, 
+                0x002c: `Personal emergency device`, 
+                0x002d: `Vibration sensor`,  },
+                
+            })), },
+        IasZone: {
+            ID: 0x0500,
+            Name: `IAS Zone`,
+            Desc: ``,
+            
+            
+            Server: {
+                Attribute: {},
+                Command: {},
+            },
+            Client: {
+                Attribute: {},
+                Command: {}
+            },
+        }
+    };
+    
+    ZigBee.IasZone.IasZone.Server.Attribute = { 
+        0x0000: ZigBee.IasZone.Types.ZoneState,
+        0x0001: ZigBee.IasZone.Types.ZoneType,
+        0x0002: ZigBee.IasZone.Types.ZoneStatus,
+    };
+    ZigBee.IasZone.IasZone.Client.Attribute = { 
+    };
+    ZigBee.IasZone.IasZone.Server.Command = { 
+    };
+    ZigBee.IasZone.IasZone.Client.Command = { 
+    };
 
     export const cluster: {[id: number]: ICluster} = { 
         0x0102: ZigBee.Closures.WindowCovering,
@@ -7937,6 +8020,7 @@ reporting occupancy status`,
         0x0405: ZigBee.MeasurementAndSensing.RelativeHumidityMeasurement,
         0x0406: ZigBee.MeasurementAndSensing.OccupancySensing,
         0x0019: ZigBee.Otau.Otau,
+        0x0500: ZigBee.IasZone.IasZone,
     };
 
     export namespace IZDP {
@@ -9385,6 +9469,25 @@ reporting occupancy status`,
             export interface IArgStatus extends IArgument { value: IArgStatusPayload }
             export type IArgUpgradeServerPayload = ValueType;
             export interface IArgUpgradeServer extends IAttribute { value: IArgUpgradeServerPayload }    }
+
+    export namespace IIasZone {
+        import IArgument = ZigBee.IArgument;
+        import IAttribute = ZigBee.IAttribute;
+        import ValueType = ZigBee.ValueType;
+        
+        export namespace IasZone {
+            import ICommand = ZigBee.ICommand;
+            import ValueType = ZigBee.ValueType;
+
+        
+        }
+
+            export type IArgZoneStatePayload = ValueType;
+            export interface IArgZoneState extends IAttribute { value: IArgZoneStatePayload }
+            export type IArgZoneStatusPayload = ValueType;
+            export interface IArgZoneStatus extends IAttribute { value: IArgZoneStatusPayload }
+            export type IArgZoneTypePayload = ValueType;
+            export interface IArgZoneType extends IAttribute { value: IArgZoneTypePayload }    }
 
 
 
