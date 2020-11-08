@@ -21,26 +21,26 @@ func (v *CurrentMaxDemandDelivered) AttrValue() zcl.Val  { return v.Value() }
 func (CurrentMaxDemandDelivered) Name() string        { return `Current Max Demand Delivered` }
 func (CurrentMaxDemandDelivered) Description() string { return `` }
 
-type CurrentMaxDemandDelivered zcl.Zuint48
+type CurrentMaxDemandDelivered zcl.Zu48
 
-func (v *CurrentMaxDemandDelivered) TypeID() zcl.TypeID { return new(zcl.Zuint48).TypeID() }
+func (v *CurrentMaxDemandDelivered) TypeID() zcl.TypeID { return new(zcl.Zu48).TypeID() }
 func (v *CurrentMaxDemandDelivered) Value() zcl.Val     { return v }
 
-func (v CurrentMaxDemandDelivered) MarshalZcl() ([]byte, error) { return zcl.Zuint48(v).MarshalZcl() }
+func (v CurrentMaxDemandDelivered) MarshalZcl() ([]byte, error) { return zcl.Zu48(v).MarshalZcl() }
 
 func (v *CurrentMaxDemandDelivered) UnmarshalZcl(b []byte) ([]byte, error) {
-	nt := new(zcl.Zuint48)
+	nt := new(zcl.Zu48)
 	br, err := nt.UnmarshalZcl(b)
 	*v = CurrentMaxDemandDelivered(*nt)
 	return br, err
 }
 
 func (v CurrentMaxDemandDelivered) MarshalJSON() ([]byte, error) {
-	return zcl.ToJson(zcl.Zuint48(v))
+	return zcl.ToJson(zcl.Zu48(v))
 }
 
 func (v *CurrentMaxDemandDelivered) UnmarshalJSON(b []byte) error {
-	a := new(zcl.Zuint48)
+	a := new(zcl.Zu48)
 	if err := zcl.ParseJson(b, a); err != nil {
 		return err
 	}
@@ -49,7 +49,7 @@ func (v *CurrentMaxDemandDelivered) UnmarshalJSON(b []byte) error {
 }
 
 func (v *CurrentMaxDemandDelivered) SetValue(a zcl.Val) error {
-	if nv, ok := a.(*zcl.Zuint48); ok {
+	if nv, ok := a.(*zcl.Zu48); ok {
 		*v = CurrentMaxDemandDelivered(*nv)
 		return nil
 	}
@@ -57,7 +57,7 @@ func (v *CurrentMaxDemandDelivered) SetValue(a zcl.Val) error {
 }
 
 func (v CurrentMaxDemandDelivered) String() string {
-	return zcl.Sprintf("%v", zcl.Zuint48(v))
+	return zcl.Sprintf("%v", zcl.Zu48(v))
 }
 
 const CurrentMaxDemandDeliveredTimeAttr zcl.AttrID = 8
@@ -500,7 +500,7 @@ func (v DefaultUpdatePeriod) String() string {
 	return zcl.Sprintf("%v", zcl.Zu8(v))
 }
 
-const FastPollUpdatePeriodAttr zcl.AttrID = 0
+const FastPollUpdatePeriodAttr zcl.AttrID = 11
 
 func (FastPollUpdatePeriod) ID() zcl.AttrID   { return FastPollUpdatePeriodAttr }
 func (FastPollUpdatePeriod) Readable() bool   { return true }
@@ -516,26 +516,26 @@ func (v *FastPollUpdatePeriod) AttrValue() zcl.Val  { return v.Value() }
 func (FastPollUpdatePeriod) Name() string        { return `Fast Poll Update Period` }
 func (FastPollUpdatePeriod) Description() string { return `` }
 
-type FastPollUpdatePeriod zcl.Z
+type FastPollUpdatePeriod zcl.Zu8
 
-func (v *FastPollUpdatePeriod) TypeID() zcl.TypeID { return new(zcl.Z).TypeID() }
+func (v *FastPollUpdatePeriod) TypeID() zcl.TypeID { return new(zcl.Zu8).TypeID() }
 func (v *FastPollUpdatePeriod) Value() zcl.Val     { return v }
 
-func (v FastPollUpdatePeriod) MarshalZcl() ([]byte, error) { return zcl.Z(v).MarshalZcl() }
+func (v FastPollUpdatePeriod) MarshalZcl() ([]byte, error) { return zcl.Zu8(v).MarshalZcl() }
 
 func (v *FastPollUpdatePeriod) UnmarshalZcl(b []byte) ([]byte, error) {
-	nt := new(zcl.Z)
+	nt := new(zcl.Zu8)
 	br, err := nt.UnmarshalZcl(b)
 	*v = FastPollUpdatePeriod(*nt)
 	return br, err
 }
 
 func (v FastPollUpdatePeriod) MarshalJSON() ([]byte, error) {
-	return zcl.ToJson(zcl.Z(v))
+	return zcl.ToJson(zcl.Zu8(v))
 }
 
 func (v *FastPollUpdatePeriod) UnmarshalJSON(b []byte) error {
-	a := new(zcl.Z)
+	a := new(zcl.Zu8)
 	if err := zcl.ParseJson(b, a); err != nil {
 		return err
 	}
@@ -544,7 +544,7 @@ func (v *FastPollUpdatePeriod) UnmarshalJSON(b []byte) error {
 }
 
 func (v *FastPollUpdatePeriod) SetValue(a zcl.Val) error {
-	if nv, ok := a.(*zcl.Z); ok {
+	if nv, ok := a.(*zcl.Zu8); ok {
 		*v = FastPollUpdatePeriod(*nv)
 		return nil
 	}
@@ -552,7 +552,7 @@ func (v *FastPollUpdatePeriod) SetValue(a zcl.Val) error {
 }
 
 func (v FastPollUpdatePeriod) String() string {
-	return zcl.Sprintf("%v", zcl.Z(v))
+	return zcl.Sprintf("%v", zcl.Zu8(v))
 }
 
 const InstantaneousDemandAttr zcl.AttrID = 1024

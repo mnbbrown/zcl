@@ -7985,7 +7985,7 @@ reporting occupancy status`,
     };
     export const SmartEnergy = {
         Types: { 
-            CurrentMaxDemandDelivered: makeType<ZigBee.ISmartEnergy.IArgCurrentMaxDemandDelivered, ZigBee.ISmartEnergy.IArgCurrentMaxDemandDeliveredPayload>(base.uint48, ()=>({
+            CurrentMaxDemandDelivered: makeType<ZigBee.ISmartEnergy.IArgCurrentMaxDemandDelivered, ZigBee.ISmartEnergy.IArgCurrentMaxDemandDeliveredPayload>(base.u48, ()=>({
                 name: `Current Max Demand Delivered`,
                 description: ``,
                 id: 0x0002,
@@ -8075,10 +8075,10 @@ reporting occupancy status`,
                 require: false,
                 
             })),
-            FastPollUpdatePeriod: makeType<ZigBee.ISmartEnergy.IArgFastPollUpdatePeriod, ZigBee.ISmartEnergy.IArgFastPollUpdatePeriodPayload>(base., ()=>({
+            FastPollUpdatePeriod: makeType<ZigBee.ISmartEnergy.IArgFastPollUpdatePeriod, ZigBee.ISmartEnergy.IArgFastPollUpdatePeriodPayload>(base.u8, ()=>({
                 name: `Fast Poll Update Period`,
                 description: ``,
-                id: ,
+                id: 0x000B,
                 report: false,
                 read: true,
                 write: false,
@@ -8144,7 +8144,7 @@ reporting occupancy status`,
         0x0008: ZigBee.SmartEnergy.Types.CurrentMaxDemandDeliveredTime,
         0x0009: ZigBee.SmartEnergy.Types.CurrentMaxDemandReceivedTime,
         0x000A: ZigBee.SmartEnergy.Types.DefaultUpdatePeriod,
-        : ZigBee.SmartEnergy.Types.FastPollUpdatePeriod,
+        0x000B: ZigBee.SmartEnergy.Types.FastPollUpdatePeriod,
         0x0400: ZigBee.SmartEnergy.Types.InstantaneousDemand,
     };
     ZigBee.SmartEnergy.MeteringSmartEnergy.Client.Attribute = { 
