@@ -8,6 +8,7 @@ import (
 	"hemtjan.st/zcl/cluster/measurement"
 	"hemtjan.st/zcl/cluster/otau"
 	"hemtjan.st/zcl/cluster/security"
+	"hemtjan.st/zcl/cluster/smart_energy"
 )
 
 var Clusters = map[zcl.ClusterID]zcl.Cluster{
@@ -47,4 +48,5 @@ var Clusters = map[zcl.ClusterID]zcl.Cluster{
 	measurement.TemperatureMeasurementID:      measurement.TemperatureMeasurementCluster,
 	otau.OtauID:                               otau.OtauCluster,
 	security.IasZoneID:                        security.IasZoneCluster,
+	smart_energy.MeteringSmartEnergyID:        smart_energy.MeteringSmartEnergyCluster,
 }

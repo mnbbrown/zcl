@@ -7983,6 +7983,176 @@ reporting occupancy status`,
     };
     ZigBee.IasZone.IasZone.Client.Command = { 
     };
+    export const SmartEnergy = {
+        Types: { 
+            CurrentMaxDemandDelivered: makeType<ZigBee.ISmartEnergy.IArgCurrentMaxDemandDelivered, ZigBee.ISmartEnergy.IArgCurrentMaxDemandDeliveredPayload>(base.uint48, ()=>({
+                name: `Current Max Demand Delivered`,
+                description: ``,
+                id: 0x0002,
+                report: false,
+                read: true,
+                write: false,
+                require: false,
+                
+            })),
+            CurrentMaxDemandDeliveredTime: makeType<ZigBee.ISmartEnergy.IArgCurrentMaxDemandDeliveredTime, ZigBee.ISmartEnergy.IArgCurrentMaxDemandDeliveredTimePayload>(base.utc, ()=>({
+                name: `Current Max Demand Delivered Time`,
+                description: ``,
+                id: 0x0008,
+                report: false,
+                read: true,
+                write: false,
+                require: false,
+                
+            })),
+            CurrentMaxDemandReceived: makeType<ZigBee.ISmartEnergy.IArgCurrentMaxDemandReceived, ZigBee.ISmartEnergy.IArgCurrentMaxDemandReceivedPayload>(base.u48, ()=>({
+                name: `Current Max Demand Received`,
+                description: ``,
+                id: 0x0003,
+                report: false,
+                read: true,
+                write: false,
+                require: false,
+                
+            })),
+            CurrentMaxDemandReceivedTime: makeType<ZigBee.ISmartEnergy.IArgCurrentMaxDemandReceivedTime, ZigBee.ISmartEnergy.IArgCurrentMaxDemandReceivedTimePayload>(base.utc, ()=>({
+                name: `Current Max Demand Received Time`,
+                description: ``,
+                id: 0x0009,
+                report: false,
+                read: true,
+                write: false,
+                require: false,
+                
+            })),
+            CurrentSummationDelivered: makeType<ZigBee.ISmartEnergy.IArgCurrentSummationDelivered, ZigBee.ISmartEnergy.IArgCurrentSummationDeliveredPayload>(base.u48, ()=>({
+                name: `Current Summation Delivered`,
+                description: ``,
+                id: 0x0000,
+                report: false,
+                read: true,
+                write: false,
+                require: false,
+                
+            })),
+            CurrentSummationReceived: makeType<ZigBee.ISmartEnergy.IArgCurrentSummationReceived, ZigBee.ISmartEnergy.IArgCurrentSummationReceivedPayload>(base.u48, ()=>({
+                name: `Current Summation Received`,
+                description: ``,
+                id: 0x0001,
+                report: false,
+                read: true,
+                write: false,
+                require: false,
+                
+            })),
+            DftSummation: makeType<ZigBee.ISmartEnergy.IArgDftSummation, ZigBee.ISmartEnergy.IArgDftSummationPayload>(base.u48, ()=>({
+                name: `DFT Summation`,
+                description: ``,
+                id: 0x0004,
+                report: false,
+                read: true,
+                write: false,
+                require: false,
+                
+            })),
+            DailyFreezeTime: makeType<ZigBee.ISmartEnergy.IArgDailyFreezeTime, ZigBee.ISmartEnergy.IArgDailyFreezeTimePayload>(base.u16, ()=>({
+                name: `Daily Freeze Time`,
+                description: ``,
+                id: 0x0005,
+                report: false,
+                read: true,
+                write: false,
+                require: false,
+                
+            })),
+            DefaultUpdatePeriod: makeType<ZigBee.ISmartEnergy.IArgDefaultUpdatePeriod, ZigBee.ISmartEnergy.IArgDefaultUpdatePeriodPayload>(base.u8, ()=>({
+                name: `Default Update Period`,
+                description: ``,
+                id: 0x000A,
+                report: false,
+                read: true,
+                write: false,
+                require: false,
+                
+            })),
+            FastPollUpdatePeriod: makeType<ZigBee.ISmartEnergy.IArgFastPollUpdatePeriod, ZigBee.ISmartEnergy.IArgFastPollUpdatePeriodPayload>(base., ()=>({
+                name: `Fast Poll Update Period`,
+                description: ``,
+                id: ,
+                report: false,
+                read: true,
+                write: false,
+                require: false,
+                
+            })),
+            InstantaneousDemand: makeType<ZigBee.ISmartEnergy.IArgInstantaneousDemand, ZigBee.ISmartEnergy.IArgInstantaneousDemandPayload>(base.s24, ()=>({
+                name: `Instantaneous Demand`,
+                description: ``,
+                id: 0x0400,
+                report: false,
+                read: false,
+                write: false,
+                require: false,
+                
+            })),
+            PowerFactor: makeType<ZigBee.ISmartEnergy.IArgPowerFactor, ZigBee.ISmartEnergy.IArgPowerFactorPayload>(base.s8, ()=>({
+                name: `Power Factor`,
+                description: ``,
+                id: 0x0006,
+                report: false,
+                read: true,
+                write: false,
+                require: false,
+                
+            })),
+            ReadingSnapShotTime: makeType<ZigBee.ISmartEnergy.IArgReadingSnapShotTime, ZigBee.ISmartEnergy.IArgReadingSnapShotTimePayload>(base.utc, ()=>({
+                name: `Reading Snap Shot Time`,
+                description: ``,
+                id: 0x0007,
+                report: false,
+                read: true,
+                write: false,
+                require: false,
+                
+            })), },
+        MeteringSmartEnergy: {
+            ID: 0x0702,
+            Name: `Metering (Smart Energy)`,
+            Desc: ``,
+            
+            
+            Server: {
+                Attribute: {},
+                Command: {},
+            },
+            Client: {
+                Attribute: {},
+                Command: {}
+            },
+        }
+    };
+    
+    ZigBee.SmartEnergy.MeteringSmartEnergy.Server.Attribute = { 
+        0x0000: ZigBee.SmartEnergy.Types.CurrentSummationDelivered,
+        0x0001: ZigBee.SmartEnergy.Types.CurrentSummationReceived,
+        0x0002: ZigBee.SmartEnergy.Types.CurrentMaxDemandDelivered,
+        0x0003: ZigBee.SmartEnergy.Types.CurrentMaxDemandReceived,
+        0x0004: ZigBee.SmartEnergy.Types.DftSummation,
+        0x0005: ZigBee.SmartEnergy.Types.DailyFreezeTime,
+        0x0006: ZigBee.SmartEnergy.Types.PowerFactor,
+        0x0007: ZigBee.SmartEnergy.Types.ReadingSnapShotTime,
+        0x0008: ZigBee.SmartEnergy.Types.CurrentMaxDemandDeliveredTime,
+        0x0009: ZigBee.SmartEnergy.Types.CurrentMaxDemandReceivedTime,
+        0x000A: ZigBee.SmartEnergy.Types.DefaultUpdatePeriod,
+        : ZigBee.SmartEnergy.Types.FastPollUpdatePeriod,
+        0x0400: ZigBee.SmartEnergy.Types.InstantaneousDemand,
+    };
+    ZigBee.SmartEnergy.MeteringSmartEnergy.Client.Attribute = { 
+    };
+    ZigBee.SmartEnergy.MeteringSmartEnergy.Server.Command = { 
+    };
+    ZigBee.SmartEnergy.MeteringSmartEnergy.Client.Command = { 
+    };
 
     export const cluster: {[id: number]: ICluster} = { 
         0x0102: ZigBee.Closures.WindowCovering,
@@ -8021,6 +8191,7 @@ reporting occupancy status`,
         0x0406: ZigBee.MeasurementAndSensing.OccupancySensing,
         0x0019: ZigBee.Otau.Otau,
         0x0500: ZigBee.IasZone.IasZone,
+        0x0702: ZigBee.SmartEnergy.MeteringSmartEnergy,
     };
 
     export namespace IZDP {
@@ -9488,6 +9659,45 @@ reporting occupancy status`,
             export interface IArgZoneStatus extends IAttribute { value: IArgZoneStatusPayload }
             export type IArgZoneTypePayload = ValueType;
             export interface IArgZoneType extends IAttribute { value: IArgZoneTypePayload }    }
+
+    export namespace ISmartEnergy {
+        import IArgument = ZigBee.IArgument;
+        import IAttribute = ZigBee.IAttribute;
+        import ValueType = ZigBee.ValueType;
+        
+        export namespace MeteringSmartEnergy {
+            import ICommand = ZigBee.ICommand;
+            import ValueType = ZigBee.ValueType;
+
+        
+        }
+
+            export type IArgCurrentMaxDemandDeliveredPayload = ValueType;
+            export interface IArgCurrentMaxDemandDelivered extends IAttribute { value: IArgCurrentMaxDemandDeliveredPayload }
+            export type IArgCurrentMaxDemandDeliveredTimePayload = ValueType;
+            export interface IArgCurrentMaxDemandDeliveredTime extends IAttribute { value: IArgCurrentMaxDemandDeliveredTimePayload }
+            export type IArgCurrentMaxDemandReceivedPayload = ValueType;
+            export interface IArgCurrentMaxDemandReceived extends IAttribute { value: IArgCurrentMaxDemandReceivedPayload }
+            export type IArgCurrentMaxDemandReceivedTimePayload = ValueType;
+            export interface IArgCurrentMaxDemandReceivedTime extends IAttribute { value: IArgCurrentMaxDemandReceivedTimePayload }
+            export type IArgCurrentSummationDeliveredPayload = ValueType;
+            export interface IArgCurrentSummationDelivered extends IAttribute { value: IArgCurrentSummationDeliveredPayload }
+            export type IArgCurrentSummationReceivedPayload = ValueType;
+            export interface IArgCurrentSummationReceived extends IAttribute { value: IArgCurrentSummationReceivedPayload }
+            export type IArgDftSummationPayload = ValueType;
+            export interface IArgDftSummation extends IAttribute { value: IArgDftSummationPayload }
+            export type IArgDailyFreezeTimePayload = ValueType;
+            export interface IArgDailyFreezeTime extends IAttribute { value: IArgDailyFreezeTimePayload }
+            export type IArgDefaultUpdatePeriodPayload = ValueType;
+            export interface IArgDefaultUpdatePeriod extends IAttribute { value: IArgDefaultUpdatePeriodPayload }
+            export type IArgFastPollUpdatePeriodPayload = ValueType;
+            export interface IArgFastPollUpdatePeriod extends IAttribute { value: IArgFastPollUpdatePeriodPayload }
+            export type IArgInstantaneousDemandPayload = ValueType;
+            export interface IArgInstantaneousDemand extends IAttribute { value: IArgInstantaneousDemandPayload }
+            export type IArgPowerFactorPayload = ValueType;
+            export interface IArgPowerFactor extends IAttribute { value: IArgPowerFactorPayload }
+            export type IArgReadingSnapShotTimePayload = ValueType;
+            export interface IArgReadingSnapShotTime extends IAttribute { value: IArgReadingSnapShotTimePayload }    }
 
 
 
