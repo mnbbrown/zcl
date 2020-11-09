@@ -551,6 +551,14 @@ namespace ZigBee {
                 arrayType: base.u16,
                 
             })),
+            LeaveOptions: makeType<ZigBee.IZDP.IArgLeaveOptions, ZigBee.IZDP.IArgLeaveOptionsPayload>(base.bmp8, ()=>({
+                name: `Leave Options`,
+                description: ``,
+                bits: { 
+                0: `Rejoin`, 
+                1: `Remove Children`,  },
+                
+            })),
             LogicalType: makeType<ZigBee.IZDP.IArgLogicalType, ZigBee.IZDP.IArgLogicalTypePayload>(base.enum8, ()=>({
                 name: `Logical Type`,
                 description: ``,
@@ -1286,6 +1294,26 @@ nodes that implements a larger number of endpoints than can be described by a Ac
                     TotalEntries: ZigBee.ZDP.Types.TotalEntries,
                     StartIndex: ZigBee.ZDP.Types.StartIndex,
                     BindingTable: ZigBee.ZDP.Types.BindingTable,
+                }
+            })),
+
+            MgmtLeaveRequest: makeType<ZigBee.IZDP.ICmdMgmtLeaveRequest, ZigBee.IZDP.ICmdMgmtLeaveRequestPayload>(command, () => ({
+                name: `Mgmt Leave Request`,
+                description: ``,
+                id: 0x0034,
+                payload: { 
+                    NwkAddress: ZigBee.ZDP.Types.NwkAddress,
+                    IeeeAddress: ZigBee.ZDP.Types.IeeeAddress,
+                    LeaveOptions: ZigBee.ZDP.Types.LeaveOptions,
+                }
+            })),
+
+            MgmtLeaveResponse: makeType<ZigBee.IZDP.ICmdMgmtLeaveResponse, ZigBee.IZDP.ICmdMgmtLeaveResponsePayload>(command, () => ({
+                name: `Mgmt Leave Response`,
+                description: ``,
+                id: 0x8034,
+                payload: { 
+                    Status: ZigBee.ZDP.Types.Status,
                 }
             })),
 
@@ -8272,6 +8300,10 @@ reporting occupancy status`,
             export interface ICmdMgmtBindRequest extends ICommand { value: ICmdMgmtBindRequestPayload }
             export type ICmdMgmtBindResponsePayload = { Status?: IArgStatusPayload, TotalEntries?: IArgTotalEntriesPayload, StartIndex?: IArgStartIndexPayload, BindingTable?: IArgBindingTablePayload, }
             export interface ICmdMgmtBindResponse extends ICommand { value: ICmdMgmtBindResponsePayload }
+            export type ICmdMgmtLeaveRequestPayload = { NwkAddress?: IArgNwkAddressPayload, IeeeAddress?: IArgIeeeAddressPayload, LeaveOptions?: IArgLeaveOptionsPayload, }
+            export interface ICmdMgmtLeaveRequest extends ICommand { value: ICmdMgmtLeaveRequestPayload }
+            export type ICmdMgmtLeaveResponsePayload = { Status?: IArgStatusPayload, }
+            export interface ICmdMgmtLeaveResponse extends ICommand { value: ICmdMgmtLeaveResponsePayload }
             export type ICmdUnbindRequestPayload = { BindingTableEntry?: IArgBindingTableEntryPayload, }
             export interface ICmdUnbindRequest extends ICommand { value: ICmdUnbindRequestPayload }
             export type ICmdUnbindResponsePayload = { Status?: IArgStatusPayload, }
@@ -8326,6 +8358,8 @@ reporting occupancy status`,
             export interface IArgIeeeAddress extends IArgument { value: IArgIeeeAddressPayload }
             export type IArgInClusterListPayload = ValueType;
             export interface IArgInClusterList extends IArgument { value: IArgInClusterListPayload }
+            export type IArgLeaveOptionsPayload = ValueType;
+            export interface IArgLeaveOptions extends IArgument { value: IArgLeaveOptionsPayload }
             export type IArgLogicalTypePayload = ValueType;
             export interface IArgLogicalType extends IArgument { value: IArgLogicalTypePayload }
             export type IArgLqiPayload = ValueType;

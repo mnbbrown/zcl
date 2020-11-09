@@ -42,6 +42,8 @@ var Commands = map[zcl.ZdoCmdID]func() zcl.ZdoCommand{
 	BindResponseCommand:                  func() zcl.ZdoCommand { return new(BindResponse) },
 	MgmtBindRequestCommand:               func() zcl.ZdoCommand { return new(MgmtBindRequest) },
 	MgmtBindResponseCommand:              func() zcl.ZdoCommand { return new(MgmtBindResponse) },
+	MgmtLeaveRequestCommand:              func() zcl.ZdoCommand { return new(MgmtLeaveRequest) },
+	MgmtLeaveResponseCommand:             func() zcl.ZdoCommand { return new(MgmtLeaveResponse) },
 	UnbindRequestCommand:                 func() zcl.ZdoCommand { return new(UnbindRequest) },
 	UnbindResponseCommand:                func() zcl.ZdoCommand { return new(UnbindResponse) },
 	MgmtLqiRequestCommand:                func() zcl.ZdoCommand { return new(MgmtLqiRequest) },
@@ -1695,6 +1697,72 @@ func (v InClusterList) String() string {
 		s = append(s, zcl.Sprintf("%v", a))
 	}
 	return "[" + zcl.StrJoin(s, ",") + "]"
+}
+
+func (LeaveOptions) Name() string        { return `Leave Options` }
+func (LeaveOptions) Description() string { return `` }
+
+type LeaveOptions zcl.Zbmp8
+
+func (v *LeaveOptions) TypeID() zcl.TypeID { return new(zcl.Zbmp8).TypeID() }
+func (v *LeaveOptions) Value() zcl.Val     { return v }
+
+func (v LeaveOptions) MarshalZcl() ([]byte, error) { return zcl.Zbmp8(v).MarshalZcl() }
+
+func (v *LeaveOptions) UnmarshalZcl(b []byte) ([]byte, error) {
+	nt := new(zcl.Zbmp8)
+	br, err := nt.UnmarshalZcl(b)
+	*v = LeaveOptions(*nt)
+	return br, err
+}
+
+func (v LeaveOptions) MarshalJSON() ([]byte, error) {
+	return zcl.ToJson(zcl.Zbmp8(v))
+}
+
+func (v *LeaveOptions) UnmarshalJSON(b []byte) error {
+	a := new(zcl.Zbmp8)
+	if err := zcl.ParseJson(b, a); err != nil {
+		return err
+	}
+	*v = LeaveOptions(*a)
+	return nil
+}
+
+func (v *LeaveOptions) SetValue(a zcl.Val) error {
+	if nv, ok := a.(*zcl.Zbmp8); ok {
+		*v = LeaveOptions(*nv)
+		return nil
+	}
+	return zcl.ErrInvalidType
+}
+
+func (v LeaveOptions) String() string {
+	var bstr []string
+	bits := zcl.BitmapList(v[:])
+	for _, bit := range bits {
+		switch bit {
+		case 0:
+			bstr = append(bstr, "Rejoin")
+		case 1:
+			bstr = append(bstr, "Remove Children")
+		default:
+			bstr = append(bstr, zcl.Sprintf("Unknown(%d)", bit))
+		}
+	}
+	return zcl.StrJoin(bstr, ", ")
+}
+
+func (v LeaveOptions) IsRejoin() bool            { return zcl.BitmapTest([]byte(v[:]), 0) }
+func (v LeaveOptions) IsRemoveChildren() bool    { return zcl.BitmapTest([]byte(v[:]), 1) }
+func (v *LeaveOptions) SetRejoin(b bool)         { copy((*v)[:], zcl.BitmapSet([]byte((*v)[:]), 0, b)) }
+func (v *LeaveOptions) SetRemoveChildren(b bool) { copy((*v)[:], zcl.BitmapSet([]byte((*v)[:]), 1, b)) }
+
+func (LeaveOptions) MultiOptions() []zcl.Option {
+	return []zcl.Option{
+		{Value: 0, Name: "Rejoin"},
+		{Value: 1, Name: "Remove Children"},
+	}
 }
 
 func (LogicalType) Name() string        { return `Logical Type` }
@@ -9083,6 +9151,230 @@ func (v MgmtBindResponse) String() string {
 		v.TotalEntries,
 		v.StartIndex,
 		v.BindingTable,
+	)
+}
+
+type MgmtLeaveRequest struct {
+	// NwkAddress is a 16-bit Network address
+	NwkAddress NwkAddress
+	// IeeeAddress is a 64-bit MAC address
+	IeeeAddress  IeeeAddress
+	LeaveOptions LeaveOptions
+}
+
+type MgmtLeaveRequestHandler interface {
+	HandleMgmtLeaveRequest(frame Frame, cmd *MgmtLeaveRequest) (*MgmtLeaveResponse, error)
+}
+
+// MgmtLeaveRequestCommand is the Command ID of MgmtLeaveRequest
+const MgmtLeaveRequestCommand CommandID = 0x0034
+
+// Values returns all values of MgmtLeaveRequest
+func (v *MgmtLeaveRequest) Values() []zcl.Val {
+	return []zcl.Val{
+		&v.NwkAddress,
+		&v.IeeeAddress,
+		&v.LeaveOptions,
+	}
+}
+
+// Arguments returns all values of MgmtLeaveRequest
+func (v *MgmtLeaveRequest) Arguments() []zcl.ArgDesc {
+	return []zcl.ArgDesc{
+		{Name: "NwkAddress", Argument: &v.NwkAddress},
+		{Name: "IeeeAddress", Argument: &v.IeeeAddress},
+		{Name: "LeaveOptions", Argument: &v.LeaveOptions},
+	}
+}
+
+// Name of the command
+func (MgmtLeaveRequest) Name() string { return `Mgmt Leave Request` }
+
+// Description of the command
+func (MgmtLeaveRequest) Description() string { return `` }
+
+// ID of the command
+func (MgmtLeaveRequest) ID() CommandID { return MgmtLeaveRequestCommand }
+
+// Required
+func (MgmtLeaveRequest) Required() bool { return false }
+
+// Cluster ID of the command
+func (MgmtLeaveRequest) Cluster() zcl.ClusterID { return 0x0034 }
+
+// MnfCode returns the manufacturer code (if any) of the command
+func (MgmtLeaveRequest) MnfCode() uint16 { return 0 }
+
+// MarshalJSON is a helper that returns the command as an uint wrapped in a byte-array
+// func (MgmtLeaveRequest) MarshalJSON() ([]byte, error) { return []byte("52"), nil }
+
+func (v *MgmtLeaveRequest) Handle(frame Frame, handler interface{}) (rsp zcl.ZdoCommand, found bool, err error) {
+	var h MgmtLeaveRequestHandler
+	if h, found = handler.(MgmtLeaveRequestHandler); found {
+		rsp, err = h.HandleMgmtLeaveRequest(frame, v)
+	} else {
+		rsp = &MgmtLeaveResponse{}
+		rsp.(*MgmtLeaveResponse).Status.SetNotSupported()
+	}
+	return
+}
+
+// MarshalZcl returns the wire format representation of MgmtLeaveRequest
+func (v MgmtLeaveRequest) MarshalZcl() ([]byte, error) {
+	var data []byte
+	var tmp []byte
+	tmp2 := uint32(0)
+	_ = tmp2
+	var err error
+
+	{
+		if tmp, err = v.NwkAddress.MarshalZcl(); err != nil {
+			return nil, err
+		}
+		data = append(data, tmp...)
+	}
+	{
+		if tmp, err = v.IeeeAddress.MarshalZcl(); err != nil {
+			return nil, err
+		}
+		data = append(data, tmp...)
+	}
+	{
+		if tmp, err = v.LeaveOptions.MarshalZcl(); err != nil {
+			return nil, err
+		}
+		data = append(data, tmp...)
+	}
+	return data, nil
+}
+
+// UnmarshalZcl parses the wire format representation into the MgmtLeaveRequest struct
+func (v *MgmtLeaveRequest) UnmarshalZcl(b []byte) ([]byte, error) {
+	var err error
+	tmp2 := uint32(0)
+	_ = tmp2
+
+	if b, err = (&v.NwkAddress).UnmarshalZcl(b); err != nil {
+		return b, err
+	}
+
+	if b, err = (&v.IeeeAddress).UnmarshalZcl(b); err != nil {
+		return b, err
+	}
+
+	if b, err = (&v.LeaveOptions).UnmarshalZcl(b); err != nil {
+		return b, err
+	}
+
+	return b, nil
+}
+
+// String returns a log-friendly string representation of the struct
+func (v MgmtLeaveRequest) String() string {
+	return zcl.Sprintf(
+		"MgmtLeaveRequest{"+zcl.StrJoin([]string{
+			"NwkAddress(%v)",
+			"IeeeAddress(%v)",
+			"LeaveOptions(%v)",
+		}, " ")+"}",
+		v.NwkAddress,
+		v.IeeeAddress,
+		v.LeaveOptions,
+	)
+}
+
+type MgmtLeaveResponse struct {
+	// Status Code, command is normally empty unless status is `Success`
+	Status Status
+}
+
+type MgmtLeaveResponseHandler interface {
+	HandleMgmtLeaveResponse(frame Frame, cmd *MgmtLeaveResponse) error
+}
+
+// MgmtLeaveResponseCommand is the Command ID of MgmtLeaveResponse
+const MgmtLeaveResponseCommand CommandID = 0x8034
+
+// Values returns all values of MgmtLeaveResponse
+func (v *MgmtLeaveResponse) Values() []zcl.Val {
+	return []zcl.Val{
+		&v.Status,
+	}
+}
+
+// Arguments returns all values of MgmtLeaveResponse
+func (v *MgmtLeaveResponse) Arguments() []zcl.ArgDesc {
+	return []zcl.ArgDesc{
+		{Name: "Status", Argument: &v.Status},
+	}
+}
+
+// Name of the command
+func (MgmtLeaveResponse) Name() string { return `Mgmt Leave Response` }
+
+// Description of the command
+func (MgmtLeaveResponse) Description() string { return `` }
+
+// ID of the command
+func (MgmtLeaveResponse) ID() CommandID { return MgmtLeaveResponseCommand }
+
+// Required
+func (MgmtLeaveResponse) Required() bool { return false }
+
+// Cluster ID of the command
+func (MgmtLeaveResponse) Cluster() zcl.ClusterID { return 0x8034 }
+
+// MnfCode returns the manufacturer code (if any) of the command
+func (MgmtLeaveResponse) MnfCode() uint16 { return 0 }
+
+// MarshalJSON is a helper that returns the command as an uint wrapped in a byte-array
+// func (MgmtLeaveResponse) MarshalJSON() ([]byte, error) { return []byte("32820"), nil }
+
+func (v *MgmtLeaveResponse) Handle(frame Frame, handler interface{}) (rsp zcl.ZdoCommand, found bool, err error) {
+	var h MgmtLeaveResponseHandler
+	if h, found = handler.(MgmtLeaveResponseHandler); found {
+		err = h.HandleMgmtLeaveResponse(frame, v)
+	}
+	return
+}
+
+// MarshalZcl returns the wire format representation of MgmtLeaveResponse
+func (v MgmtLeaveResponse) MarshalZcl() ([]byte, error) {
+	var data []byte
+	var tmp []byte
+	tmp2 := uint32(0)
+	_ = tmp2
+	var err error
+
+	{
+		if tmp, err = v.Status.MarshalZcl(); err != nil {
+			return nil, err
+		}
+		data = append(data, tmp...)
+	}
+	return data, nil
+}
+
+// UnmarshalZcl parses the wire format representation into the MgmtLeaveResponse struct
+func (v *MgmtLeaveResponse) UnmarshalZcl(b []byte) ([]byte, error) {
+	var err error
+	tmp2 := uint32(0)
+	_ = tmp2
+
+	if b, err = (&v.Status).UnmarshalZcl(b); err != nil {
+		return b, err
+	}
+
+	return b, nil
+}
+
+// String returns a log-friendly string representation of the struct
+func (v MgmtLeaveResponse) String() string {
+	return zcl.Sprintf(
+		"MgmtLeaveResponse{"+zcl.StrJoin([]string{
+			"Status(%v)",
+		}, " ")+"}",
+		v.Status,
 	)
 }
 
